@@ -53,15 +53,32 @@ function plotting(subject) {
         }
         
         Plotly.newPlot("bubble", bubble_data, bubble_layout);
-
-
     });
-
 };
+
+// demographic info functions
+function graphicinfo(subject) {
+        d3.json("samples.json").then((sdata)=> {
+
+            var metadata = sdata.metadata;
+    
+            var results = metadata.filter(meta => meta.id.toString() === subject)[0];
+          
+            var demographic = d3.select("#sample-metadata");
+            
+           demographic.html("");
+    
+            Object.entries(results).forEach((key) => {   
+                demographic.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
+            });
+        });
+}
+
 
 // change event function
 function optionChanged(subject) {
     plotting(subject);
+    graphicinfo(subject);
 }
 
 // function for taking sampledata and populating dropdown
@@ -76,6 +93,8 @@ function init() {
         });
 
         plotting(sdata.names[0]);
+
+        graphicinfo(sdata.names[0]);
     });
 }
 
