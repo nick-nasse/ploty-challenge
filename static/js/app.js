@@ -34,6 +34,27 @@ function plotting(subject) {
 
         Plotly.newPlot("bar", bar_data, bar_layout);
 
+        // Plot Bubble Graph 
+        var trace2 = {
+            x: samples.otu_ids,
+            y: samples.sample_values,
+            mode: "markers",
+            marker: {
+                size: samples.sample_values,
+                color: samples.otu_ids
+            },
+            text: samples.otu_labels
+        };
+
+        var bubble_data = [trace2];
+
+        var bubble_layout = {
+            title: "OTU ID",
+        }
+        
+        Plotly.newPlot("bubble", bubble_data, bubble_layout);
+
+
     });
 
 };
